@@ -3,18 +3,19 @@ int compare (const void * a, const void * b)
   return ( *(int*)a - *(int*)b );
 }
 
-int maxRepeatingInts (int* arr, int len)
+int maxRepeatingInts (int* arr)
 {
-    int i,tmp,*tmpArr,currCount,maxCount;
+    int i,tmp,len,*tmpArr,currCount,maxCount;
 
+    len = arr[0];
     if (len == 1)
     {
         return 1;
     }
 
     tmpArr = (int*)malloc(len*sizeof(int*));
-    for(i=0; i<len; i++){
-        tmpArr[i]=arr[i];
+    for(i=1; i<=len; i++){ // пропускаем элемент с длиной
+        tmpArr[i-1]=arr[i];
     }
 
     currCount = 0;
@@ -52,26 +53,27 @@ int main(int argc,char* argv[])
     {
         printf("n%d:",i+1);
         scanf("%d",&n);
-        a[i]=(int*)malloc(n*sizeof(int));
-        for(j=0; j<n; j++)
+        a[i]=(int*)malloc((n+1)*sizeof(int));
+        a[i][0]=n; // первый элемент будет хранить количество элементов в строке
+        for(j=1; j<=n; j++)
         {
             printf("a%d", i+1);
-            printf("%d:", j+1);
+            printf("%d:", j);
             scanf("%d",&tmp);
             a[i][j]=tmp;
         }
-        v[i]=maxRepeatingInts(a[i], n);
+        v[i]=maxRepeatingInts(a[i]);
     }
 
     printf("matrix:\n");
-    for(i=0; i<n; i++,printf("\n"))
+    for(i=0; i<m; i++,printf("\n"))
     {
-        m=*a[i];
-        for(j=0; j<m; j++) printf("%3d",a[i][j]);
+        n=a[i][0];
+        for(j=1; j<=n; j++) printf("%3d",a[i][j]);
     }
 
     printf("vector:\n");
-    for(i=0; i<n; i++)
+    for(i=0; i<m; i++)
     {
         printf("%3d", v[i]);
     }
